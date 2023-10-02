@@ -16,7 +16,7 @@ public class AppInitializer extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        AnchorPane root= FXMLLoader.load(getClass().getResource("/MainScene.fxml"));
+        AnchorPane root= FXMLLoader.load(getClass().getResource("/view/MainScene.fxml"));
         Scene mainScene=new Scene(root);
         primaryStage.setScene(mainScene);
         primaryStage.setTitle("Media-Player");
