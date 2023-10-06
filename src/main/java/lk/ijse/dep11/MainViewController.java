@@ -1,16 +1,27 @@
 package lk.ijse.dep11;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 
 public class MainViewController {
     public AnchorPane root;
@@ -21,8 +32,23 @@ public class MainViewController {
     public Button btnStop;
     public Button btnFast;
     public Button btnNormal;
-    public Button btnPause;
+    public Button btnSound;
+    public Slider sdSound;
+
     MediaPlayer mediaPlayer;
+
+    public void initialize(){
+
+        sdSound.setVisible(false);
+        Platform.runLater(()->{
+            mvMain.fitWidthProperty().bind(root.getScene().getWindow().widthProperty());
+            mvMain.fitHeightProperty().bind(root.getScene().getWindow().heightProperty());
+        });
+        sdSound.valueProperty().addListener(e->{
+            mediaPlayer.setVolume(sdSound.getValue());
+        });
+
+    }
 
     public void btnBrowseOnAction(ActionEvent actionEvent) {
         FileChooser fileChooser=new FileChooser();
@@ -41,21 +67,26 @@ public class MainViewController {
         }else{
             txtBrowse.clear();
         }
-
-
     }
 
     public void btnPlayOnAction(ActionEvent actionEvent) {
-        if(mediaPlayer!=null) {
+        //btnPlay.setText(btnPlay.getText().equals("▶")?"॥":"▶");
+        if(mediaPlayer!=null&&btnPlay.getText().equals("▶")) {
             mvMain.setMediaPlayer(mediaPlayer);
             mediaPlayer.play();
-        }
+            btnPlay.setText("॥");
+        } else if (mediaPlayer!=null&&btnPlay.getText().equals("॥")) {
+            mediaPlayer.pause();
+            btnPlay.setText("▶");
+        } else {return;}
+
     }
 
     public void btnStopOnAction(ActionEvent actionEvent) {
         if(mediaPlayer!=null){
             mediaPlayer.stop();
             txtBrowse.clear();
+            btnPlay.setText("▶");
         }
     }
 
@@ -67,7 +98,13 @@ public class MainViewController {
         if(mediaPlayer!=null)mediaPlayer.setRate(1.0);
     }
 
-    public void btnPauseOnAction(ActionEvent actionEvent) {
-        if(mediaPlayer!=null) mediaPlayer.pause();
+
+
+    public void btnSoundOnAction(ActionEvent actionEvent) {
+        if(mediaPlayer!=null)sdSound.setVisible(true);
+    }
+
+    public void sdSoundDragDone(DragEvent dragEvent) {
+
     }
 }
