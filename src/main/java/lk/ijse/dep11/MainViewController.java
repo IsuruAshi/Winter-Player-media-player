@@ -5,6 +5,7 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -28,12 +29,15 @@ public class MainViewController {
     public Button btnSound;
     public Slider sdSound;
     public Slider sldDuration;
+    public Label lblTimeDuration;
+    Duration duration;
 
     MediaPlayer mediaPlayer;
     boolean soundVisibility;
 
     public void initialize() {
-        soundVisibility=false;
+
+        soundVisibility = false;
         sdSound.setVisible(soundVisibility);
         sdSound.setValue(100);
         Platform.runLater(() -> {
@@ -44,13 +48,37 @@ public class MainViewController {
         sdSound.valueProperty().addListener(e -> {
             mediaPlayer.setVolume(sdSound.getValue());
         });
+
         sldDuration.valueProperty().addListener(observable -> {
-            if(sldDuration.isValueChanging()){
-                mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(sldDuration.getValue()/100));
+            if (sldDuration.isValueChanging()) {
+                double percentage = sldDuration.getValue() / 100.0;
+                Duration totalDuration = mediaPlayer.getMedia().getDuration();
+                Duration seekTime = totalDuration.multiply(percentage);
+
+                mediaPlayer.seek(seekTime);
+                lblTimeDuration.setText(formatDuration(seekTime));
             }
         });
 
     }
+    private String formatDuration(Duration duration) {
+        int hours = (int) duration.toHours();
+        int minutes = (int) (duration.toMinutes() % 60);
+        int seconds = (int) (duration.toSeconds() % 60);
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+//    protected void updateValue(){
+//        if(mediaPlayer!=null){
+//            Platform.runLater(() -> {
+//                Duration currentTime=mediaPlayer.getCurrentTime();
+//                lblTimeDuration.setText(currentTime.toString());
+//                sldDuration.setValue(currentTime.divide(duration).toMillis()*100.0);
+//
+//            });
+//        }
+//    }
 
     public void btnBrowseOnAction(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -66,12 +94,14 @@ public class MainViewController {
             txtBrowse.setText(file.getAbsolutePath());
             Media media = new Media(file.toURI().toString());
             mediaPlayer = new MediaPlayer(media);
+
         } else {
             txtBrowse.clear();
         }
     }
 
     public void btnPlayOnAction(ActionEvent actionEvent) {
+        sldDuration.setDisable(false);
         //btnPlay.setText(btnPlay.getText().equals("▶")?"॥":"▶");
         if (mediaPlayer != null && btnPlay.getText().equals("▶")) {
             mvMain.setMediaPlayer(mediaPlayer);
@@ -103,10 +133,8 @@ public class MainViewController {
 
     public void btnSoundOnAction(ActionEvent actionEvent) {
 
-
-                soundVisibility = !soundVisibility;
-                sdSound.setVisible(soundVisibility);
-
+        soundVisibility = !soundVisibility;
+        sdSound.setVisible(soundVisibility);
 
     }
 }
