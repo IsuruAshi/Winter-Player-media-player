@@ -1,5 +1,7 @@
 package lk.ijse.dep11;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -46,8 +48,13 @@ public class MainViewController {
 
         });
         sdSound.valueProperty().addListener(e -> {
-            mediaPlayer.setVolume(sdSound.getValue());
+            if(sdSound.isValueChanging()){
+                double percentage = sdSound.getValue() / 100.0;
+                mediaPlayer.setVolume(percentage);
+            }
+
         });
+
 
         sldDuration.valueProperty().addListener(observable -> {
             if (sldDuration.isValueChanging()) {
@@ -56,7 +63,7 @@ public class MainViewController {
                 Duration seekTime = totalDuration.multiply(percentage);
 
                 mediaPlayer.seek(seekTime);
-                lblTimeDuration.setText(formatDuration(seekTime));
+
             }
         });
 
@@ -69,16 +76,7 @@ public class MainViewController {
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
-//    protected void updateValue(){
-//        if(mediaPlayer!=null){
-//            Platform.runLater(() -> {
-//                Duration currentTime=mediaPlayer.getCurrentTime();
-//                lblTimeDuration.setText(currentTime.toString());
-//                sldDuration.setValue(currentTime.divide(duration).toMillis()*100.0);
-//
-//            });
-//        }
-//    }
+
 
     public void btnBrowseOnAction(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -107,6 +105,23 @@ public class MainViewController {
             mvMain.setMediaPlayer(mediaPlayer);
             mediaPlayer.play();
             btnPlay.setText("॥");
+
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(1), event -> {
+                        // Update the slider value based on the current playback time
+                        double currentTimePercentage = mediaPlayer.getCurrentTime().toMillis() / mediaPlayer.getTotalDuration().toMillis();
+                        sldDuration.setValue(currentTimePercentage * 100.0);
+
+                        // Update the label with the formatted current time
+                        lblTimeDuration.setText(formatDuration(mediaPlayer.getCurrentTime()));
+                    })
+            );
+
+            // Set the timeline to repeat indefinitely
+            timeline.setCycleCount(Timeline.INDEFINITE);
+
+            // Start the timeline
+            timeline.play();
         } else if (mediaPlayer != null && btnPlay.getText().equals("॥")) {
             mediaPlayer.pause();
             btnPlay.setText("▶");

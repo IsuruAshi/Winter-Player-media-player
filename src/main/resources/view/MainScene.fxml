@@ -21,14 +21,23 @@
    <children>
       <HBox layoutX="1.0" prefHeight="40.0" prefWidth="830.0" style="-fx-background-color: #0C356A;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="49.0" prefWidth="402.0" text="    Media Player" textFill="#40f8ff">
+            <ImageView fitHeight="41.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asser.img/ice.png" />
+               </image>
+            </ImageView>
+            <Label maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="187.0" text="Winter Player" textFill="#40f8ff">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
             </Label>
+            <Label prefHeight="41.0" prefWidth="183.0" text="Label" />
             <TextField fx:id="txtBrowse" alignment="CENTER" prefHeight="24.0" prefWidth="244.0" promptText="Search Here" style="-fx-background-color: #40F8FF;">
                <HBox.margin>
                   <Insets top="5.0" />
@@ -56,38 +65,6 @@
          <children>
             <AnchorPane prefHeight="87.0" prefWidth="834.0">
                <children>
-                  <Button fx:id="btnPlay" contentDisplay="CENTER" layoutX="375.0" layoutY="16.0" mnemonicParsing="false" onAction="#btnPlayOnAction" prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: #279EFF;" text="▶" textAlignment="CENTER" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="401.0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="btnStop" alignment="CENTER" contentDisplay="CENTER" layoutX="281.0" layoutY="16.0" mnemonicParsing="false" onAction="#btnStopOnAction" prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: #279EFF;" text="◾" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="495.0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="btnFast" contentDisplay="CENTER" layoutX="469.0" layoutY="16.0" mnemonicParsing="false" onAction="#btnFastOnAction" prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: #279EFF;" text="1.5x" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="307.0">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="btnNormal" contentDisplay="CENTER" layoutX="565.0" layoutY="16.0" minWidth="47.0" mnemonicParsing="false" onAction="#btnNormalOnAction" prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: #279EFF;" text="1x" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="211.0">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
                   <Group layoutX="76.0" layoutY="3.0" />
                   <Button fx:id="btnSound" contentDisplay="GRAPHIC_ONLY" graphicTextGap="5.0" layoutY="2.0" mnemonicParsing="false" onAction="#btnSoundOnAction" prefHeight="68.0" prefWidth="54.0" style="-fx-background-color: none;" textAlignment="CENTER" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0">
                      <font>
@@ -110,6 +87,45 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <HBox layoutX="269.0" layoutY="16.0" prefHeight="40.0" prefWidth="334.0" spacing="20.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="231.0">
+                     <children>
+                        <Button fx:id="btnStop" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnStopOnAction" prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: #279EFF;" text="◾">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets left="60.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnPlay" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnPlayOnAction" prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: #279EFF;" text="▶" textAlignment="CENTER">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btnFast" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnFastOnAction" prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: #279EFF;" text="1.5x">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btnNormal" contentDisplay="CENTER" minWidth="47.0" mnemonicParsing="false" onAction="#btnNormalOnAction" prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: #279EFF;" text="1x">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
                <HBox.margin>
                   <Insets />
@@ -128,7 +144,8 @@
       <Slider fx:id="sldDuration" layoutX="30.0" layoutY="462.0" prefHeight="16.0" prefWidth="788.0" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="80.0">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></Slider>
-      <Label fx:id="lblTimeDuration" layoutX="784.0" layoutY="462.0" prefHeight="16.0" prefWidth="71.0" text="00:00" textFill="#fffbfb" AnchorPane.bottomAnchor="78.0" AnchorPane.rightAnchor="11.0" />
+         </cursor>
+      </Slider>
+      <Label fx:id="lblTimeDuration" layoutX="784.0" layoutY="462.0" prefHeight="16.0" prefWidth="71.0" text="00:00:00" textFill="#fffbfb" AnchorPane.bottomAnchor="78.0" AnchorPane.rightAnchor="11.0" />
    </children>
 </AnchorPane>
